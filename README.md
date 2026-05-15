@@ -5,7 +5,7 @@ Cards SVG com estatísticas do GitHub para usar no seu README. Basta copiar a UR
 ## Uso
 
 ```markdown
-![Card](https://seu-app.vercel.app/api/stats?user=SEU_USERNAME&theme=dark)
+![Card](https://gh-stats-ruddy.vercel.app/api/stats?user=SEU_USERNAME&theme=dark)
 ```
 
 **Temas disponíveis:** `dark` · `light` · `dracula` · `radical` · `tokyonight`
@@ -14,38 +14,38 @@ Cards SVG com estatísticas do GitHub para usar no seu README. Basta copiar a UR
 
 ## Cards
 
-### Stats Gerais
-![Stats](https://seu-app.vercel.app/api/stats?user=eltobsjr&theme=dark)
+### Top Linguagens
+![Langs](https://gh-stats-ruddy.vercel.app/api/langs?user=eltobsjr&theme=dark)
 
 ```markdown
-![Stats](https://seu-app.vercel.app/api/stats?user=SEU_USERNAME&theme=dark)
+![Langs](https://gh-stats-ruddy.vercel.app/api/langs?user=SEU_USERNAME&theme=dark)
 ```
 
 ---
 
-### Top Linguagens
-![Langs](https://seu-app.vercel.app/api/langs?user=eltobsjr&theme=dark)
+### Stats Gerais
+![Stats](https://gh-stats-ruddy.vercel.app/api/stats?user=eltobsjr&theme=dark)
 
 ```markdown
-![Langs](https://seu-app.vercel.app/api/langs?user=SEU_USERNAME&theme=dark)
+![Stats](https://gh-stats-ruddy.vercel.app/api/stats?user=SEU_USERNAME&theme=dark)
 ```
 
 ---
 
 ### Top Repositórios
-![Repos](https://seu-app.vercel.app/api/repos?user=eltobsjr&theme=dark)
+![Repos](https://gh-stats-ruddy.vercel.app/api/repos?user=eltobsjr&theme=dark)
 
 ```markdown
-![Repos](https://seu-app.vercel.app/api/repos?user=SEU_USERNAME&theme=dark)
+![Repos](https://gh-stats-ruddy.vercel.app/api/repos?user=SEU_USERNAME&theme=dark)
 ```
 
 ---
 
 ### Heatmap de Contribuições
-![Heatmap](https://seu-app.vercel.app/api/heatmap?user=eltobsjr&theme=dark)
+![Heatmap](https://gh-stats-ruddy.vercel.app/api/heatmap?user=eltobsjr&theme=dark)
 
 ```markdown
-![Heatmap](https://seu-app.vercel.app/api/heatmap?user=SEU_USERNAME&theme=dark)
+![Heatmap](https://gh-stats-ruddy.vercel.app/api/heatmap?user=SEU_USERNAME&theme=dark)
 ```
 
 ---
@@ -53,10 +53,10 @@ Cards SVG com estatísticas do GitHub para usar no seu README. Basta copiar a UR
 ### Streak de Commits
 > Requer `GITHUB_TOKEN`
 
-![Streak](https://seu-app.vercel.app/api/streak?user=eltobsjr&theme=dark)
+![Streak](https://gh-stats-ruddy.vercel.app/api/streak?user=eltobsjr&theme=dark)
 
 ```markdown
-![Streak](https://seu-app.vercel.app/api/streak?user=SEU_USERNAME&theme=dark)
+![Streak](https://gh-stats-ruddy.vercel.app/api/streak?user=SEU_USERNAME&theme=dark)
 ```
 
 ---
@@ -64,37 +64,37 @@ Cards SVG com estatísticas do GitHub para usar no seu README. Basta copiar a UR
 ### Horários de Código
 > Requer `GITHUB_TOKEN`
 
-![Hours](https://seu-app.vercel.app/api/hours?user=eltobsjr&theme=dark)
+![Hours](https://gh-stats-ruddy.vercel.app/api/hours?user=eltobsjr&theme=dark)
 
 ```markdown
-![Hours](https://seu-app.vercel.app/api/hours?user=SEU_USERNAME&theme=dark)
+![Hours](https://gh-stats-ruddy.vercel.app/api/hours?user=SEU_USERNAME&theme=dark)
 ```
 
 ---
 
 ### Mood dos Commits
-![Mood](https://seu-app.vercel.app/api/mood?user=eltobsjr&theme=dark)
+![Mood](https://gh-stats-ruddy.vercel.app/api/mood?user=eltobsjr&theme=dark)
 
 ```markdown
-![Mood](https://seu-app.vercel.app/api/mood?user=SEU_USERNAME&theme=dark)
+![Mood](https://gh-stats-ruddy.vercel.app/api/mood?user=SEU_USERNAME&theme=dark)
 ```
 
 ---
 
 ### Developer DNA
-![DNA](https://seu-app.vercel.app/api/dna?user=eltobsjr&theme=dark)
+![DNA](https://gh-stats-ruddy.vercel.app/api/dna?user=eltobsjr&theme=dark)
 
 ```markdown
-![DNA](https://seu-app.vercel.app/api/dna?user=SEU_USERNAME&theme=dark)
+![DNA](https://gh-stats-ruddy.vercel.app/api/dna?user=SEU_USERNAME&theme=dark)
 ```
 
 ---
 
 ### Coding RPG
-![RPG](https://seu-app.vercel.app/api/rpg?user=eltobsjr&theme=dark)
+![RPG](https://gh-stats-ruddy.vercel.app/api/rpg?user=eltobsjr&theme=dark)
 
 ```markdown
-![RPG](https://seu-app.vercel.app/api/rpg?user=SEU_USERNAME&theme=dark)
+![RPG](https://gh-stats-ruddy.vercel.app/api/rpg?user=SEU_USERNAME&theme=dark)
 ```
 
 ---
@@ -102,19 +102,19 @@ Cards SVG com estatísticas do GitHub para usar no seu README. Basta copiar a UR
 ### Night Owl Stats
 > Requer `GITHUB_TOKEN`
 
-![Night Owl](https://seu-app.vercel.app/api/nocturnal?user=eltobsjr&theme=dark)
+![Night Owl](https://gh-stats-ruddy.vercel.app/api/nocturnal?user=eltobsjr&theme=dark)
 
 ```markdown
-![Night Owl](https://seu-app.vercel.app/api/nocturnal?user=SEU_USERNAME&theme=dark)
+![Night Owl](https://gh-stats-ruddy.vercel.app/api/nocturnal?user=SEU_USERNAME&theme=dark)
 ```
 
 ---
 
 ### Project Graveyard
-![Graveyard](https://seu-app.vercel.app/api/graveyard?user=eltobsjr&theme=dark)
+![Graveyard](https://gh-stats-ruddy.vercel.app/api/graveyard?user=eltobsjr&theme=dark)
 
 ```markdown
-![Graveyard](https://seu-app.vercel.app/api/graveyard?user=SEU_USERNAME&theme=dark)
+![Graveyard](https://gh-stats-ruddy.vercel.app/api/graveyard?user=SEU_USERNAME&theme=dark)
 ```
 
 ---
