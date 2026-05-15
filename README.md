@@ -14,7 +14,9 @@ Cards SVG com estatísticas do GitHub para usar no seu README. Basta copiar a UR
 
 ## Cards
 
-### Top Linguagens
+### Top Linguagens — Gráfico de Distribuição
+Donut chart com distribuição percentual das linguagens mais usadas.
+
 ![Langs](https://gh-stats-ruddy.vercel.app/api/langs?user=eltobsjr&theme=dark)
 
 ```markdown
@@ -115,6 +117,19 @@ Cards SVG com estatísticas do GitHub para usar no seu README. Basta copiar a UR
 
 ```markdown
 ![Graveyard](https://gh-stats-ruddy.vercel.app/api/graveyard?user=SEU_USERNAME&theme=dark)
+```
+
+---
+
+### Activity — Gráfico de Linha
+> Requer `GITHUB_TOKEN`
+
+Contribuições dos últimos 12 meses como gráfico de área.
+
+![Activity](https://gh-stats-ruddy.vercel.app/api/activity?user=eltobsjr&theme=dark)
+
+```markdown
+![Activity](https://gh-stats-ruddy.vercel.app/api/activity?user=SEU_USERNAME&theme=dark)
 ```
 
 ---

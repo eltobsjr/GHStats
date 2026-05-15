@@ -56,6 +56,25 @@ const mockNocturnal = { nightCommits: 234, mostActiveHour: 23, longestSessionMs:
 
 const mockGraveyard = { active: ['github-stats', 'blog'], dormant: ['old-api', 'scripts'], dead: ['todo-app', 'calc', 'weather-bot', 'rss-reader', 'cli-tools'] }
 
+const mockActivity = {
+  hasToken: true,
+  total: 843,
+  months: [
+    { year: 2024, month: 5,  count: 45  },
+    { year: 2024, month: 6,  count: 78  },
+    { year: 2024, month: 7,  count: 92  },
+    { year: 2024, month: 8,  count: 67  },
+    { year: 2024, month: 9,  count: 110 },
+    { year: 2024, month: 10, count: 88  },
+    { year: 2024, month: 11, count: 134 },
+    { year: 2025, month: 0,  count: 72  },
+    { year: 2025, month: 1,  count: 56  },
+    { year: 2025, month: 2,  count: 98  },
+    { year: 2025, month: 3,  count: 143 },
+    { year: 2025, month: 4,  count: 60  },
+  ],
+}
+
 // heatmap uses scraped SVG — skip with a placeholder
 const mockHeatmapSvg = `<svg width="722" height="112" viewBox="0 0 722 112" xmlns="http://www.w3.org/2000/svg">
   ${Array(52).fill(0).map((_, w) =>
@@ -79,6 +98,7 @@ const { renderCard: renderRpg }       = require('./api/rpg')
 const { renderCard: renderNocturnal } = require('./api/nocturnal')
 const { renderCard: renderGraveyard } = require('./api/graveyard')
 const { renderCard: renderHeatmap }   = require('./api/heatmap')
+const { renderCard: renderActivity }  = require('./api/activity')
 
 const themes = [
   { name: 'dark',       theme: dark    },
@@ -100,7 +120,8 @@ function renderAll(theme) {
     { title: 'RPG',        svg: renderRpg(mockRpg, theme)             },
     { title: 'Night Owl',  svg: renderNocturnal(mockNocturnal, theme) },
     { title: 'Graveyard',  svg: renderGraveyard(mockGraveyard, theme) },
-    { title: 'Heatmap',    svg: renderHeatmap(mockHeatmapSvg, theme)  },
+    { title: 'Heatmap',    svg: renderHeatmap(mockHeatmapSvg, theme)     },
+    { title: 'Activity',   svg: renderActivity(mockActivity, theme)      },
   ]
 }
 
@@ -135,7 +156,7 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
 <h1>GitHub Stats — Card Preview</h1>
-<p class="meta">Todos os 11 cards com dados mock — 5 temas</p>
+<p class="meta">Todos os 13 cards com dados mock — 5 temas</p>
 
 ${themes.map(({ name, theme }) => `
 <section class="theme-section">

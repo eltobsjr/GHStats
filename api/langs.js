@@ -1,6 +1,8 @@
 const { createClient } = require('../lib/github')
 const { getTheme, langColors } = require('../lib/themes')
-const { card, text, bar, dot, rainbowBar, errorCard } = require('../lib/svg')
+const { card, text, dot, donut, errorCard } = require('../lib/svg')
+
+const CX = 110, CY = 118, OUTER_R = 74, INNER_R = 50
 
 function aggregateLangs(langsPerRepo) {
   const totals = {}
@@ -26,29 +28,25 @@ async function fetchData(gh, username) {
 }
 
 function renderCard(langs, theme) {
-  const BAR_X = 150
-  const BAR_W = 295
-  const PCT_X = 468
+  const segments = langs.map(l => ({ pct: l.pct, color: langColors[l.name] || theme.accent }))
+  const chart = donut({ cx: CX, cy: CY, outerR: OUTER_R, innerR: INNER_R, segments })
 
+  const centerCount = text({ x: CX, y: CY - 4, content: String(langs.length), fill: theme.text, size: 24, weight: '700', anchor: 'middle' })
+  const centerLabel = text({ x: CX, y: CY + 16, content: 'langs', fill: theme.subtext, size: 11, anchor: 'middle' })
+
+  const LIST_X = 210
   const rows = langs.map((lang, i) => {
-    const y = 52 + i * 29
-    const midY = y + 8
-    const w = Math.max(3, Math.round((lang.pct / 100) * BAR_W))
+    const y = 52 + i * 27
     const color = langColors[lang.name] || theme.accent
     return [
-      dot({ cx: 35, cy: midY, fill: color }),
-      text({ x: 47, y: midY + 4, content: lang.name, fill: theme.text, size: 12 }),
-      bar({ x: BAR_X, y, width: BAR_W, height: 16, fill: '#161b22' }),
-      bar({ x: BAR_X, y, width: w, height: 16, fill: color }),
-      text({ x: PCT_X, y: midY + 4, content: `${lang.pct}%`, fill: theme.subtext, size: 11, anchor: 'end' }),
+      dot({ cx: LIST_X + 6, cy: y + 7, r: 5, fill: color }),
+      text({ x: LIST_X + 20, y: y + 12, content: lang.name, fill: theme.text, size: 12 }),
+      text({ x: 468, y: y + 12, content: `${lang.pct}%`, fill: theme.subtext, size: 11, anchor: 'end' }),
     ].join('\n')
   }).join('\n')
 
-  const rbY = 52 + langs.length * 29 + 8
-  const rbItems = langs.map(l => ({ pct: l.pct, color: langColors[l.name] || theme.accent }))
-  const rb = rainbowBar({ x: 25, y: rbY, totalWidth: 445, items: rbItems })
-
-  return card({ height: rbY + 28, theme, title: 'Top Languages', body: rows + '\n' + rb })
+  const height = Math.max(220, 52 + langs.length * 27 + 24)
+  return card({ height, theme, title: 'Top Languages', body: [chart, centerCount, centerLabel, rows].join('\n') })
 }
 
 module.exports = async function handler(req, res) {
