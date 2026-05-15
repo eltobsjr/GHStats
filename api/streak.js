@@ -46,7 +46,7 @@ function renderCard(data, theme) {
     const x = CHIP_X[i]
     const cx = x + CHIP_W / 2
     return [
-      `<rect x="${x}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="8" fill="#161b22"/>`,
+      `<rect x="${x}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="${theme.chipRx ?? 8}" fill="${theme.chip || '#161b22'}"/>`,
       `<rect x="${x}" y="${CHIP_Y}" width="${CHIP_W}" height="4" rx="2" fill="${c.color}"/>`,
       text({ x: cx, y: CHIP_Y + 64, content: c.value,    fill: c.color,       size: 32, weight: '800', anchor: 'middle' }),
       text({ x: cx, y: CHIP_Y + 86, content: c.label,    fill: theme.subtext, size: 10,               anchor: 'middle' }),

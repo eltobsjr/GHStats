@@ -6,9 +6,10 @@ const light   = getTheme('light')
 const dracula = getTheme('dracula')
 const radical = getTheme('radical')
 const tokyo   = getTheme('tokyonight')
+const pixel   = getTheme('pixel')
 
 // --- mock data ---
-const mockStats = { name: 'eltobsjr', totalStars: 1247, totalCommits: 843, followers: 312, totalRepos: 58 }
+const mockStats = { name: 'eltobsjr', totalStars: 1247, totalCommits: 843, followers: 312, totalRepos: 58, topLang: 'TypeScript' }
 
 const mockLangs = [
   { name: 'TypeScript', bytes: 45000, pct: 41.5 },
@@ -50,12 +51,12 @@ const mockMood = {
 
 const mockDna = { frontend: 42, backend: 35, infra: 12, data: 8, systems: 3 }
 
-const mockRpgMage      = { xp: 820,   level: 2,  xpForNext: 900,   className: 'Type Wizard'        }
-const mockRpgEngineer  = { xp: 4820,  level: 6,  xpForNext: 4900,  className: 'Goroutine Monk'     }
-const mockRpgWarrior   = { xp: 12400, level: 11, xpForNext: 14400, className: 'Borrow Keeper'      }
-const mockRpgSamurai   = { xp: 45000, level: 21, xpForNext: 48400, className: 'Swift Blade'        }
-const mockRpgRogue     = { xp: 72000, level: 30, xpForNext: 96100, className: 'Shadow Operator'    }
-const mockRpgAlchemist = { xp: 9800,  level: 9,  xpForNext: 10000, className: 'Data Alchemist'     }
+const mockRpgMage      = { xp: 820,   level: 2,  xpForNext: 900,   className: 'Type Wizard',     topLang: 'TypeScript' }
+const mockRpgEngineer  = { xp: 4820,  level: 6,  xpForNext: 4900,  className: 'Goroutine Monk',  topLang: 'Go'         }
+const mockRpgWarrior   = { xp: 12400, level: 11, xpForNext: 14400, className: 'Borrow Keeper',   topLang: 'Rust'       }
+const mockRpgSamurai   = { xp: 45000, level: 21, xpForNext: 48400, className: 'Swift Blade',     topLang: 'Swift'      }
+const mockRpgRogue     = { xp: 72000, level: 30, xpForNext: 96100, className: 'Shadow Operator', topLang: 'Python'     }
+const mockRpgAlchemist = { xp: 9800,  level: 9,  xpForNext: 10000, className: 'Data Alchemist',  topLang: 'Python'     }
 
 const mockNocturnal = { nightCommits: 234, mostActiveHour: 23, longestSessionMs: 4 * 3600000 + 20 * 60000, hasToken: true }
 
@@ -111,6 +112,7 @@ const themes = [
   { name: 'dracula',    theme: dracula },
   { name: 'radical',    theme: radical },
   { name: 'tokyonight', theme: tokyo   },
+  { name: 'pixel',      theme: pixel   },
 ]
 
 function renderAll(theme) {

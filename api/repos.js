@@ -15,7 +15,7 @@ function renderCard(repos, theme) {
   const body = repos.map((r, i) => {
     const y = 48 + i * 38
     return [
-      `<rect x="25" y="${y}" width="445" height="30" rx="6" fill="#161b22"/>`,
+      `<rect x="25" y="${y}" width="445" height="30" rx="${theme.chipRx ?? 6}" fill="${theme.chip || '#161b22'}"/>`,
       `<rect x="25" y="${y}" width="3" height="30" rx="1.5" fill="${theme.accent}"/>`,
       text({ x: 38, y: y + 20, content: r.name,                                   fill: theme.accent,  size: 13, weight: '600' }),
       text({ x: 258, y: y + 20, content: `★ ${r.stargazers_count.toLocaleString('en-US')}`, fill: theme.subtext, size: 12 }),

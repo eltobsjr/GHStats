@@ -1,5 +1,5 @@
 const { createClient } = require('../lib/github')
-const { getTheme } = require('../lib/themes')
+const { getTheme, langColors } = require('../lib/themes')
 const { card, text, chip, errorCard } = require('../lib/svg')
 
 const CHIP_W = 214
@@ -19,12 +19,18 @@ async function fetchData(gh, username) {
     gh.getRepos(username),
     gh.getContributionsCalendar(username),
   ])
+  const langTotals = {}
+  for (const repo of repos.filter(r => !r.fork && r.language)) {
+    langTotals[repo.language] = (langTotals[repo.language] || 0) + 1
+  }
+  const topLang = Object.entries(langTotals).sort(([, a], [, b]) => b - a)[0]?.[0] || ''
   return {
     name: user.name || user.login,
     followers: user.followers,
     totalRepos: user.public_repos,
     totalStars: repos.reduce((s, r) => s + r.stargazers_count, 0),
     totalCommits: calendar ? calendar.totalContributions : null,
+    topLang,
   }
 }
 
@@ -34,7 +40,7 @@ function renderCard(data, theme) {
     const display = val === null ? '?' : (typeof val === 'number' ? val.toLocaleString('en-US') : String(val))
     const color = s.color || theme[s.colorKey]
     return [
-      chip({ x: s.x, y: s.y, width: CHIP_W, height: CHIP_H }),
+      chip({ x: s.x, y: s.y, width: CHIP_W, height: CHIP_H }, theme),
       text({ x: s.x + 12, y: s.y + 17, content: s.label, fill: theme.subtext, size: 10 }),
       text({ x: s.x + 12, y: s.y + 42, content: display, fill: color, size: 22, weight: '700' }),
     ].join('\n')
@@ -44,8 +50,11 @@ function renderCard(data, theme) {
     ? text({ x: 25, y: 208, content: 'Add GITHUB_TOKEN for commit count', fill: theme.subtext, size: 11 })
     : ''
 
+  const badge = data.topLang
+    ? { lang: data.topLang, color: langColors[data.topLang] || '#8b949e' }
+    : null
   const height = data.totalCommits === null ? 222 : 190
-  return card({ height, theme, title: `${data.name}'s GitHub Stats`, body: chips + tokenHint })
+  return card({ height, theme, title: `${data.name}'s GitHub Stats`, body: chips + tokenHint, badge })
 }
 
 module.exports = async function handler(req, res) {

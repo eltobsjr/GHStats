@@ -1,10 +1,10 @@
 const { createClient } = require('../lib/github')
-const { getTheme } = require('../lib/themes')
+const { getTheme, langColors } = require('../lib/themes')
 const { card, text, bar, errorCard } = require('../lib/svg')
 const { renderSprite, getClass, getLevelTier } = require('../lib/sprites')
 
 const CARD_W = 495
-const CARD_H = 240
+const CARD_H = 250
 
 // Sprite: centered on top
 const SPR_W  = 90
@@ -14,7 +14,7 @@ const SPR_Y  = 36
 
 // Three chips below the sprite
 const CHIP_Y = 158
-const CHIP_H = 72
+const CHIP_H = 82
 const CHIP_W = 147
 const CHIP_GAP = 7
 const CHIP_X = [
@@ -44,7 +44,7 @@ async function fetchData(gh, username) {
   }
   const topLang = Object.entries(langTotals).sort(([, a], [, b]) => b - a)[0]?.[0] || ''
   const rpg = calculateRpg({ totalCommits, totalStars, totalRepos: repos.length })
-  return { ...rpg, className: getClass(topLang).name }
+  return { ...rpg, className: getClass(topLang).name, topLang }
 }
 
 function renderCard(data, theme) {
@@ -56,33 +56,42 @@ function renderCard(data, theme) {
 
   const sprite = renderSprite(data.className, data.level, SPR_X, SPR_Y, SPR_W, SPR_H)
 
+  const chipRx = theme.chipRx ?? 10
+  const chipFill = theme.chip || '#161b22'
+
   // Chip 1 — Level
   const chip1 = [
-    `<rect x="${CHIP_X[0]}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="10" fill="#161b22"/>`,
+    `<rect x="${CHIP_X[0]}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="${chipRx}" fill="${chipFill}"/>`,
     `<rect x="${CHIP_X[0]}" y="${CHIP_Y}" width="${CHIP_W}" height="3" rx="1.5" fill="${theme.accent}"/>`,
-    text({ x: CHIP_X[0] + CHIP_W / 2, y: CHIP_Y + 36, content: `Level ${data.level}`, fill: theme.accent, size: 20, weight: '800', anchor: 'middle' }),
-    text({ x: CHIP_X[0] + CHIP_W / 2, y: CHIP_Y + 52, content: 'LEVEL', fill: theme.subtext, size: 9, anchor: 'middle' }),
+    text({ x: CHIP_X[0] + CHIP_W / 2, y: CHIP_Y + 42, content: `Level ${data.level}`, fill: theme.accent, size: 20, weight: '800', anchor: 'middle' }),
+    text({ x: CHIP_X[0] + CHIP_W / 2, y: CHIP_Y + 58, content: 'LEVEL', fill: theme.subtext, size: 9, anchor: 'middle' }),
   ].join('\n')
 
-  // Chip 2 — Class + tier badge
+  const langColor2 = (data.topLang && langColors[data.topLang]) || '#8b949e'
+  const langBadgeEl = data.topLang
+    ? text({ x: CHIP_X[1] + CHIP_W / 2, y: CHIP_Y + 49, content: `● ${data.topLang}`, fill: langColor2, size: 9, weight: '600', anchor: 'middle' })
+    : ''
+
+  // Chip 2 — Class + lang badge + tier
   const chip2 = [
-    `<rect x="${CHIP_X[1]}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="10" fill="#161b22"/>`,
+    `<rect x="${CHIP_X[1]}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="${chipRx}" fill="${chipFill}"/>`,
     `<rect x="${CHIP_X[1]}" y="${CHIP_Y}" width="${CHIP_W}" height="3" rx="1.5" fill="#d2a8ff"/>`,
-    text({ x: CHIP_X[1] + CHIP_W / 2, y: CHIP_Y + 30, content: data.className, fill: '#d2a8ff', size: 11, weight: '700', anchor: 'middle' }),
-    text({ x: CHIP_X[1] + CHIP_W / 2, y: CHIP_Y + 44, content: 'CLASSE', fill: theme.subtext, size: 9, anchor: 'middle' }),
-    tier ? `<rect x="${CHIP_X[1] + CHIP_W / 2 - 22}" y="${CHIP_Y + 51}" width="44" height="14" rx="7" fill="${tier.color}" opacity="0.18"/>` : '',
-    tier ? text({ x: CHIP_X[1] + CHIP_W / 2, y: CHIP_Y + 62, content: tier.label, fill: tier.color, size: 8, weight: '700', anchor: 'middle' }) : '',
+    text({ x: CHIP_X[1] + CHIP_W / 2, y: CHIP_Y + 22, content: data.className, fill: '#d2a8ff', size: 11, weight: '700', anchor: 'middle' }),
+    text({ x: CHIP_X[1] + CHIP_W / 2, y: CHIP_Y + 35, content: 'CLASSE', fill: theme.subtext, size: 9, anchor: 'middle' }),
+    langBadgeEl,
+    tier ? `<rect x="${CHIP_X[1] + CHIP_W / 2 - 22}" y="${CHIP_Y + 60}" width="44" height="14" rx="${Math.min(7, chipRx)}" fill="${tier.color}" opacity="0.18"/>` : '',
+    tier ? text({ x: CHIP_X[1] + CHIP_W / 2, y: CHIP_Y + 71, content: tier.label, fill: tier.color, size: 8, weight: '700', anchor: 'middle' }) : '',
   ].join('\n')
 
   // Chip 3 — XP + progress bar
   const chip3 = [
-    `<rect x="${CHIP_X[2]}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="10" fill="#161b22"/>`,
+    `<rect x="${CHIP_X[2]}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="${chipRx}" fill="${chipFill}"/>`,
     `<rect x="${CHIP_X[2]}" y="${CHIP_Y}" width="${CHIP_W}" height="3" rx="1.5" fill="${theme.accent2}"/>`,
-    text({ x: CHIP_X[2] + CHIP_W / 2, y: CHIP_Y + 24, content: data.xp.toLocaleString('en-US'), fill: theme.accent2, size: 18, weight: '800', anchor: 'middle' }),
-    text({ x: CHIP_X[2] + CHIP_W / 2, y: CHIP_Y + 37, content: 'XP', fill: theme.subtext, size: 9, anchor: 'middle' }),
-    bar({ x: barX, y: CHIP_Y + 44, width: BAR_W, height: 8, fill: '#21262d', rx: 4 }),
-    bar({ x: barX, y: CHIP_Y + 44, width: filled, height: 8, fill: theme.accent2, rx: 4 }),
-    text({ x: CHIP_X[2] + CHIP_W / 2, y: CHIP_Y + 64, content: `${progressPct}% até o próximo`, fill: theme.subtext, size: 8, anchor: 'middle' }),
+    text({ x: CHIP_X[2] + CHIP_W / 2, y: CHIP_Y + 30, content: data.xp.toLocaleString('en-US'), fill: theme.accent2, size: 18, weight: '800', anchor: 'middle' }),
+    text({ x: CHIP_X[2] + CHIP_W / 2, y: CHIP_Y + 43, content: 'XP', fill: theme.subtext, size: 9, anchor: 'middle' }),
+    bar({ x: barX, y: CHIP_Y + 52, width: BAR_W, height: 8, fill: '#21262d', rx: 4 }),
+    bar({ x: barX, y: CHIP_Y + 52, width: filled, height: 8, fill: theme.accent2, rx: 4 }),
+    text({ x: CHIP_X[2] + CHIP_W / 2, y: CHIP_Y + 72, content: `${progressPct}% até o próximo`, fill: theme.subtext, size: 8, anchor: 'middle' }),
   ].join('\n')
 
   const body = [sprite, chip1, chip2, chip3].join('\n')
