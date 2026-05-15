@@ -119,16 +119,6 @@ Cards SVG com estatísticas do GitHub para usar no seu README. Basta copiar a UR
 
 ---
 
-## Deploy
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/eltobsjr/github-stats)
-
-Após o deploy, adicione a variável de ambiente opcional:
-
-| Variável | Descrição |
-|---|---|
-| `GITHUB_TOKEN` | Personal Access Token do GitHub. Aumenta o rate limit de 60 para 5.000 req/h e habilita os cards de Streak, Hours e Night Owl. |
-
 ## Parâmetros
 
 | Parâmetro | Obrigatório | Exemplo |
