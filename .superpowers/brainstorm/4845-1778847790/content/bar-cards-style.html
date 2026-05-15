@@ -1,0 +1,137 @@
+<h2>Como ficam os cards com barras (Langs, DNA, Mood)?</h2>
+<p class="subtitle">Aplicando o estilo moderno aos cards de linguagens e categorias</p>
+
+<div class="cards">
+
+  <!-- Option A: Thicker colored bars with dot -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0a;padding:16px;display:flex;justify-content:center;">
+      <svg width="440" height="230" viewBox="0 0 440 230" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1a" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#58a6ff"/>
+            <stop offset="100%" style="stop-color:#388bfd"/>
+          </linearGradient>
+          <linearGradient id="g2a" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#3fb950"/>
+            <stop offset="100%" style="stop-color:#2ea043"/>
+          </linearGradient>
+          <linearGradient id="g3a" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#d2a8ff"/>
+            <stop offset="100%" style="stop-color:#bc8cff"/>
+          </linearGradient>
+          <linearGradient id="topG1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#58a6ff"/>
+            <stop offset="100%" style="stop-color:#3fb950"/>
+          </linearGradient>
+        </defs>
+        <rect width="440" height="230" rx="14" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+        <rect x="0" y="0" width="440" height="3" rx="1" fill="url(#topG1)"/>
+        <text x="22" y="30" font-family="'Segoe UI',sans-serif" font-size="15" font-weight="700" fill="#ffffff">Top Languages</text>
+
+        <!-- Row 1: JavaScript 45% -->
+        <circle cx="32" cy="55" r="5" fill="#58a6ff"/>
+        <text x="44" y="59" font-family="'Segoe UI',sans-serif" font-size="12" fill="#c9d1d9">JavaScript</text>
+        <rect x="160" y="46" width="232" height="16" rx="4" fill="#161b22"/>
+        <rect x="160" y="46" width="104" height="16" rx="4" fill="url(#g1a)"/>
+        <text x="418" y="59" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e" text-anchor="end">45%</text>
+
+        <!-- Row 2: TypeScript 28% -->
+        <circle cx="32" cy="84" r="5" fill="#3fb950"/>
+        <text x="44" y="88" font-family="'Segoe UI',sans-serif" font-size="12" fill="#c9d1d9">TypeScript</text>
+        <rect x="160" y="75" width="232" height="16" rx="4" fill="#161b22"/>
+        <rect x="160" y="75" width="65" height="16" rx="4" fill="url(#g2a)"/>
+        <text x="418" y="88" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e" text-anchor="end">28%</text>
+
+        <!-- Row 3: Python 15% -->
+        <circle cx="32" cy="113" r="5" fill="#d2a8ff"/>
+        <text x="44" y="117" font-family="'Segoe UI',sans-serif" font-size="12" fill="#c9d1d9">Python</text>
+        <rect x="160" y="104" width="232" height="16" rx="4" fill="#161b22"/>
+        <rect x="160" y="104" width="35" height="16" rx="4" fill="url(#g3a)"/>
+        <text x="418" y="117" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e" text-anchor="end">15%</text>
+
+        <!-- Row 4: Go 8% -->
+        <circle cx="32" cy="142" r="5" fill="#e3b341"/>
+        <text x="44" y="146" font-family="'Segoe UI',sans-serif" font-size="12" fill="#c9d1d9">Go</text>
+        <rect x="160" y="133" width="232" height="16" rx="4" fill="#161b22"/>
+        <rect x="160" y="133" width="19" height="16" rx="4" fill="#e3b341"/>
+        <text x="418" y="146" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e" text-anchor="end">8%</text>
+
+        <!-- Row 5: Shell 4% -->
+        <circle cx="32" cy="171" r="5" fill="#f78166"/>
+        <text x="44" y="175" font-family="'Segoe UI',sans-serif" font-size="12" fill="#c9d1d9">Shell</text>
+        <rect x="160" y="162" width="232" height="16" rx="4" fill="#161b22"/>
+        <rect x="160" y="162" width="9" height="16" rx="4" fill="#f78166"/>
+        <text x="418" y="175" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e" text-anchor="end">4%</text>
+
+        <!-- stacked rainbow bar at bottom -->
+        <rect x="22" y="196" width="396" height="8" rx="4" fill="#161b22"/>
+        <rect x="22" y="196" width="178" height="8" rx="4" fill="#58a6ff"/>
+        <rect x="200" y="196" width="111" height="8" rx="0" fill="#3fb950"/>
+        <rect x="311" y="196" width="59" height="8" rx="0" fill="#d2a8ff"/>
+        <rect x="370" y="196" width="32" height="8" rx="0" fill="#e3b341"/>
+        <rect x="402" y="196" width="16" height="8" rx="4" fill="#f78166"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A — Barras com gradiente + dot</h3>
+      <p>Dot colorido antes do nome, barra com gradiente, fundo escuro nas barras vazias. Barra arco-íris no rodapé mostra proporção geral.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Horizontal compact list -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0a;padding:16px;display:flex;justify-content:center;">
+      <svg width="440" height="230" viewBox="0 0 440 230" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="topG2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#58a6ff"/>
+            <stop offset="100%" style="stop-color:#3fb950"/>
+          </linearGradient>
+        </defs>
+        <rect width="440" height="230" rx="14" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+        <rect x="0" y="0" width="440" height="3" rx="1" fill="url(#topG2)"/>
+        <text x="22" y="30" font-family="'Segoe UI',sans-serif" font-size="15" font-weight="700" fill="#ffffff">Top Languages</text>
+
+        <!-- lang chips in grid 2x3 -->
+        <!-- Row 1 -->
+        <rect x="16" y="44" width="196" height="52" rx="8" fill="#161b22"/>
+        <rect x="16" y="44" width="4" height="52" rx="2" fill="#58a6ff"/>
+        <text x="30" y="62" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e">JavaScript</text>
+        <text x="30" y="82" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#58a6ff">45%</text>
+
+        <rect x="228" y="44" width="196" height="52" rx="8" fill="#161b22"/>
+        <rect x="228" y="44" width="4" height="52" rx="2" fill="#3fb950"/>
+        <text x="242" y="62" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e">TypeScript</text>
+        <text x="242" y="82" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#3fb950">28%</text>
+
+        <!-- Row 2 -->
+        <rect x="16" y="108" width="196" height="52" rx="8" fill="#161b22"/>
+        <rect x="16" y="108" width="4" height="52" rx="2" fill="#d2a8ff"/>
+        <text x="30" y="126" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e">Python</text>
+        <text x="30" y="146" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#d2a8ff">15%</text>
+
+        <rect x="228" y="108" width="196" height="52" rx="8" fill="#161b22"/>
+        <rect x="228" y="108" width="4" height="52" rx="2" fill="#e3b341"/>
+        <text x="242" y="126" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e">Go</text>
+        <text x="242" y="146" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#e3b341">8%</text>
+
+        <!-- Row 3 -->
+        <rect x="16" y="172" width="196" height="44" rx="8" fill="#161b22"/>
+        <rect x="16" y="172" width="4" height="44" rx="2" fill="#f78166"/>
+        <text x="30" y="188" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e">Shell</text>
+        <text x="30" y="206" font-family="'Segoe UI',sans-serif" font-size="20" font-weight="700" fill="#f78166">4%</text>
+
+        <rect x="228" y="172" width="196" height="44" rx="8" fill="#161b22"/>
+        <rect x="228" y="172" width="4" height="44" rx="2" fill="#79c0ff"/>
+        <text x="242" y="188" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e">Other</text>
+        <text x="242" y="206" font-family="'Segoe UI',sans-serif" font-size="20" font-weight="700" fill="#79c0ff">— </text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B — Chips em grade (sem barras)</h3>
+      <p>Cada linguagem em chip 2x3, porcentagem grande em destaque. Linha colorida à esquerda do chip. Consistente com o card de stats.</p>
+    </div>
+  </div>
+
+</div>

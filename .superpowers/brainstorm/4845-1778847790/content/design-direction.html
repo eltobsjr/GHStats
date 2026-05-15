@@ -1,0 +1,112 @@
+<h2>Qual direção de design você prefere para os cards?</h2>
+<p class="subtitle">Três propostas para o visual dos SVG cards — tema dark como referência</p>
+
+<div class="cards">
+
+  <!-- Option A: Clean & Polished -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0a;padding:16px;display:flex;justify-content:center;">
+      <svg width="440" height="180" viewBox="0 0 440 180" xmlns="http://www.w3.org/2000/svg">
+        <rect width="440" height="180" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+        <!-- Title bar -->
+        <text x="22" y="38" font-family="'Segoe UI',Ubuntu,sans-serif" font-size="15" font-weight="600" fill="#58a6ff">eltobsjr's GitHub Stats</text>
+        <line x1="22" y1="48" x2="418" y2="48" stroke="#21262d" stroke-width="1"/>
+        <!-- Stat 1: Stars -->
+        <text x="22" y="74" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e">⭐ Total Stars</text>
+        <text x="22" y="92" font-family="'Segoe UI',sans-serif" font-size="19" font-weight="700" fill="#c9d1d9">1,247</text>
+        <!-- Stat 2: Commits -->
+        <text x="230" y="74" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e">🔥 Commits (year)</text>
+        <text x="230" y="92" font-family="'Segoe UI',sans-serif" font-size="19" font-weight="700" fill="#c9d1d9">843</text>
+        <!-- Stat 3: Followers -->
+        <text x="22" y="124" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e">👥 Followers</text>
+        <text x="22" y="142" font-family="'Segoe UI',sans-serif" font-size="19" font-weight="700" fill="#c9d1d9">312</text>
+        <!-- Stat 4: Repos -->
+        <text x="230" y="124" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e">📦 Public Repos</text>
+        <text x="230" y="142" font-family="'Segoe UI',sans-serif" font-size="19" font-weight="700" fill="#c9d1d9">58</text>
+        <!-- Bottom line -->
+        <line x1="22" y1="155" x2="418" y2="155" stroke="#21262d" stroke-width="1"/>
+        <text x="22" y="170" font-family="'Segoe UI',sans-serif" font-size="10" fill="#484f58">github-stats.vercel.app</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A — Clean & Polished</h3>
+      <p>Refinamento sutil: border-radius maior (12px), separador sob o título, ícones Unicode, números maiores e mais legíveis. Evolução natural do design atual.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Modern with accent -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0a;padding:16px;display:flex;justify-content:center;">
+      <svg width="440" height="180" viewBox="0 0 440 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#58a6ff;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#3fb950;stop-opacity:1"/>
+          </linearGradient>
+        </defs>
+        <rect width="440" height="180" rx="14" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+        <!-- Accent top bar -->
+        <rect x="0" y="0" width="440" height="3" rx="1" fill="url(#borderGrad)"/>
+        <!-- Title -->
+        <text x="22" y="36" font-family="'Segoe UI',Ubuntu,sans-serif" font-size="15" font-weight="700" fill="#ffffff">eltobsjr's GitHub Stats</text>
+        <!-- Stats with chip background -->
+        <!-- Stat 1 -->
+        <rect x="16" y="52" width="190" height="52" rx="8" fill="#161b22"/>
+        <text x="28" y="71" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8b949e">STARS</text>
+        <text x="28" y="94" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#58a6ff">1,247</text>
+        <!-- Stat 2 -->
+        <rect x="218" y="52" width="206" height="52" rx="8" fill="#161b22"/>
+        <text x="230" y="71" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8b949e">COMMITS (ANO)</text>
+        <text x="230" y="94" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#3fb950">843</text>
+        <!-- Stat 3 -->
+        <rect x="16" y="116" width="190" height="50" rx="8" fill="#161b22"/>
+        <text x="28" y="134" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8b949e">SEGUIDORES</text>
+        <text x="28" y="157" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#d2a8ff">312</text>
+        <!-- Stat 4 -->
+        <rect x="218" y="116" width="206" height="50" rx="8" fill="#161b22"/>
+        <text x="230" y="134" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8b949e">REPOS</text>
+        <text x="230" y="157" font-family="'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#e3b341">58</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B — Modern com Chips</h3>
+      <p>Cada stat em um chip com fundo próprio. Faixa de gradiente no topo, números coloridos por categoria. Visual mais impactante e contemporâneo.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Minimal Technical -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0a;padding:16px;display:flex;justify-content:center;">
+      <svg width="440" height="180" viewBox="0 0 440 180" xmlns="http://www.w3.org/2000/svg">
+        <rect width="440" height="180" rx="8" fill="#0d1117" stroke="#58a6ff" stroke-width="1" stroke-opacity="0.4"/>
+        <!-- Left accent bar -->
+        <rect x="0" y="20" width="3" height="60" rx="1.5" fill="#58a6ff"/>
+        <!-- Title -->
+        <text x="22" y="36" font-family="'Segoe UI',Ubuntu,sans-serif" font-size="14" font-weight="600" fill="#58a6ff">eltobsjr's GitHub Stats</text>
+        <text x="22" y="52" font-family="'Segoe UI',sans-serif" font-size="10" fill="#484f58">Updated just now</text>
+        <!-- Divider -->
+        <line x1="22" y1="62" x2="418" y2="62" stroke="#21262d" stroke-width="1"/>
+        <!-- Stats in rows -->
+        <text x="22" y="83" font-family="'Segoe UI',sans-serif" font-size="12" fill="#8b949e">Total Stars</text>
+        <text x="418" y="83" font-family="'Segoe UI',sans-serif" font-size="14" font-weight="600" fill="#c9d1d9" text-anchor="end">1,247</text>
+        <line x1="22" y1="90" x2="418" y2="90" stroke="#21262d" stroke-width="0.5" stroke-dasharray="4,4"/>
+
+        <text x="22" y="109" font-family="'Segoe UI',sans-serif" font-size="12" fill="#8b949e">Commits (year)</text>
+        <text x="418" y="109" font-family="'Segoe UI',sans-serif" font-size="14" font-weight="600" fill="#c9d1d9" text-anchor="end">843</text>
+        <line x1="22" y1="116" x2="418" y2="116" stroke="#21262d" stroke-width="0.5" stroke-dasharray="4,4"/>
+
+        <text x="22" y="135" font-family="'Segoe UI',sans-serif" font-size="12" fill="#8b949e">Followers</text>
+        <text x="418" y="135" font-family="'Segoe UI',sans-serif" font-size="14" font-weight="600" fill="#c9d1d9" text-anchor="end">312</text>
+        <line x1="22" y1="142" x2="418" y2="142" stroke="#21262d" stroke-width="0.5" stroke-dasharray="4,4"/>
+
+        <text x="22" y="161" font-family="'Segoe UI',sans-serif" font-size="12" fill="#8b949e">Public Repos</text>
+        <text x="418" y="161" font-family="'Segoe UI',sans-serif" font-size="14" font-weight="600" fill="#c9d1d9" text-anchor="end">58</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>C — Minimal em Linha</h3>
+      <p>Stats em lista com separadores tracejados, label à esquerda e valor alinhado à direita. Alta densidade, leitura rápida, borda azul sutil.</p>
+    </div>
+  </div>
+
+</div>
