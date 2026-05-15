@@ -1,6 +1,6 @@
 const { createClient } = require('../lib/github')
-const { getTheme } = require('../lib/themes')
-const { card, text, bar, errorCard } = require('../lib/svg')
+const { getTheme, langColors } = require('../lib/themes')
+const { card, text, bar, dot, rainbowBar, errorCard } = require('../lib/svg')
 
 function aggregateLangs(langsPerRepo) {
   const totals = {}
@@ -26,18 +26,29 @@ async function fetchData(gh, username) {
 }
 
 function renderCard(langs, theme) {
-  const BAR_MAX = 340
-  const body = langs.map((lang, i) => {
-    const y = 55 + i * 25
-    const w = Math.max(2, Math.round((lang.pct / 100) * BAR_MAX))
+  const BAR_X = 150
+  const BAR_W = 295
+  const PCT_X = 468
+
+  const rows = langs.map((lang, i) => {
+    const y = 52 + i * 29
+    const midY = y + 8
+    const w = Math.max(3, Math.round((lang.pct / 100) * BAR_W))
+    const color = langColors[lang.name] || theme.accent
     return [
-      text({ x: 25, y: y + 12, content: lang.name, fill: theme.text, size: 12 }),
-      bar({ x: 120, y, width: w, height: 14, fill: theme.accent }),
-      bar({ x: 120 + w, y, width: BAR_MAX - w, height: 14, fill: theme.border }),
-      text({ x: 470, y: y + 12, content: `${lang.pct}%`, fill: theme.subtext, size: 11, anchor: 'end' }),
+      dot({ cx: 35, cy: midY, fill: color }),
+      text({ x: 47, y: midY + 4, content: lang.name, fill: theme.text, size: 12 }),
+      bar({ x: BAR_X, y, width: BAR_W, height: 16, fill: '#161b22' }),
+      bar({ x: BAR_X, y, width: w, height: 16, fill: color }),
+      text({ x: PCT_X, y: midY + 4, content: `${lang.pct}%`, fill: theme.subtext, size: 11, anchor: 'end' }),
     ].join('\n')
   }).join('\n')
-  return card({ height: 60 + langs.length * 25 + 20, theme, title: 'Top Languages', body })
+
+  const rbY = 52 + langs.length * 29 + 8
+  const rbItems = langs.map(l => ({ pct: l.pct, color: langColors[l.name] || theme.accent }))
+  const rb = rainbowBar({ x: 25, y: rbY, totalWidth: 445, items: rbItems })
+
+  return card({ height: rbY + 28, theme, title: 'Top Languages', body: rows + '\n' + rb })
 }
 
 module.exports = async function handler(req, res) {

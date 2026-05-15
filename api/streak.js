@@ -2,6 +2,11 @@ const { createClient } = require('../lib/github')
 const { getTheme } = require('../lib/themes')
 const { card, text, errorCard } = require('../lib/svg')
 
+const CHIP_X = [16, 173, 330]
+const CHIP_Y = 48
+const CHIP_W = 148
+const CHIP_H = 120
+
 function calculateStreaks(calendar) {
   const days = calendar.weeks.flatMap(w => w.contributionDays)
   let longestStreak = 0, streak = 0
@@ -30,13 +35,26 @@ function renderCard(data, theme) {
       body: text({ x: 25, y: 90, content: 'Add GITHUB_TOKEN to enable streak tracking', fill: theme.subtext }),
     })
   }
-  const body = [
-    text({ x: 247, y: 85, content: String(data.currentStreak), fill: theme.accent, size: 32, weight: '700', anchor: 'middle' }),
-    text({ x: 247, y: 105, content: 'Current Streak (days)', fill: theme.subtext, size: 12, anchor: 'middle' }),
-    text({ x: 100, y: 145, content: `Longest: ${data.longestStreak} days`, fill: theme.text, size: 13, anchor: 'middle' }),
-    text({ x: 380, y: 145, content: `Total: ${data.totalContributions}`, fill: theme.text, size: 13, anchor: 'middle' }),
-  ].join('\n')
-  return card({ theme, title: 'GitHub Streak', body })
+
+  const chipDefs = [
+    { label: 'STREAK ATUAL', sublabel: 'dias',          value: String(data.currentStreak),                    color: theme.accent  },
+    { label: 'MAIOR STREAK', sublabel: 'dias',          value: String(data.longestStreak),                    color: theme.accent2 },
+    { label: 'TOTAL',        sublabel: 'contribuições', value: data.totalContributions.toLocaleString('en-US'), color: '#d2a8ff'     },
+  ]
+
+  const body = chipDefs.map((c, i) => {
+    const x = CHIP_X[i]
+    const cx = x + CHIP_W / 2
+    return [
+      `<rect x="${x}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="8" fill="#161b22"/>`,
+      `<rect x="${x}" y="${CHIP_Y}" width="${CHIP_W}" height="4" rx="2" fill="${c.color}"/>`,
+      text({ x: cx, y: CHIP_Y + 64, content: c.value,    fill: c.color,       size: 32, weight: '800', anchor: 'middle' }),
+      text({ x: cx, y: CHIP_Y + 86, content: c.label,    fill: theme.subtext, size: 10,               anchor: 'middle' }),
+      text({ x: cx, y: CHIP_Y + 100, content: c.sublabel, fill: theme.subtext, size: 10,               anchor: 'middle' }),
+    ].join('\n')
+  }).join('\n')
+
+  return card({ height: 185, theme, title: 'GitHub Streak', body })
 }
 
 module.exports = async function handler(req, res) {

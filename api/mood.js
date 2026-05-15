@@ -1,6 +1,6 @@
 const { createClient } = require('../lib/github')
 const { getTheme } = require('../lib/themes')
-const { card, text, bar, errorCard } = require('../lib/svg')
+const { card, text, bar, dot, rainbowBar, errorCard } = require('../lib/svg')
 
 const CATEGORIES = {
   feat:     ['feat', 'add', 'new', 'implement', 'create', 'build', 'initial'],
@@ -40,21 +40,34 @@ async function fetchData(gh, username) {
 }
 
 function renderCard(data, theme) {
-  const BAR_MAX = 340
+  const BAR_X = 120
+  const BAR_W = 305
+  const PCT_X = 445
+
   const entries = Object.entries(data.counts).sort(([, a], [, b]) => b - a)
-  const body = entries.map(([cat, count], i) => {
-    const y = 55 + i * 23
+  const rows = entries.map(([cat, count], i) => {
+    const y = 52 + i * 29
+    const midY = y + 8
     const pct = Math.round((count / data.total) * 100)
-    const w = Math.max(2, Math.round((count / data.total) * BAR_MAX))
+    const w = Math.max(3, Math.round((count / data.total) * BAR_W))
     const fill = COLORS[cat] || theme.accent
     return [
-      text({ x: 25, y: y + 12, content: cat, fill: theme.text, size: 12 }),
-      bar({ x: 90, y, width: w, height: 14, fill }),
-      bar({ x: 90 + w, y, width: BAR_MAX - w, height: 14, fill: theme.border }),
-      text({ x: 440, y: y + 12, content: `${pct}%`, fill: theme.subtext, size: 11, anchor: 'end' }),
+      dot({ cx: 35, cy: midY, fill }),
+      text({ x: 47, y: midY + 4, content: cat, fill: theme.text, size: 12 }),
+      bar({ x: BAR_X, y, width: BAR_W, height: 16, fill: '#161b22' }),
+      bar({ x: BAR_X, y, width: w, height: 16, fill }),
+      text({ x: PCT_X, y: midY + 4, content: `${pct}%`, fill: theme.subtext, size: 11, anchor: 'end' }),
     ].join('\n')
   }).join('\n')
-  return card({ height: 60 + entries.length * 23 + 15, theme, title: 'Commit Mood', body })
+
+  const rbY = 52 + entries.length * 29 + 8
+  const rbItems = entries.map(([cat, count]) => ({
+    pct: Math.round((count / data.total) * 100),
+    color: COLORS[cat] || theme.accent,
+  }))
+  const rb = rainbowBar({ x: 25, y: rbY, totalWidth: 445, items: rbItems })
+
+  return card({ height: rbY + 28, theme, title: 'Commit Mood', body: rows + '\n' + rb })
 }
 
 module.exports = async function handler(req, res) {

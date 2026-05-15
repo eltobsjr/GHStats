@@ -1,6 +1,6 @@
 const { createClient } = require('../lib/github')
 const { getTheme } = require('../lib/themes')
-const { card, text, bar, errorCard } = require('../lib/svg')
+const { card, text, bar, dot, rainbowBar, errorCard } = require('../lib/svg')
 
 const DAY_MS = 86400000
 
@@ -24,28 +24,37 @@ async function fetchData(gh, username) {
 
 function renderCard(data, theme) {
   const total = data.active.length + data.dormant.length + data.dead.length || 1
-  const BAR_MAX = 340
+  const BAR_X = 145
+  const BAR_W = 295
   const categories = [
-    { label: 'Active', list: data.active, color: '#3fb950' },
+    { label: 'Active',  list: data.active,  color: '#3fb950' },
     { label: 'Dormant', list: data.dormant, color: theme.accent },
-    { label: 'Dead', list: data.dead, color: '#f78166' },
+    { label: 'Dead',    list: data.dead,    color: '#f78166' },
   ]
-  const bars = categories.map((cat, i) => {
-    const y = 55 + i * 35
-    const w = Math.max(2, Math.round((cat.list.length / total) * BAR_MAX))
+
+  const rows = categories.map((cat, i) => {
+    const y = 52 + i * 30
+    const midY = y + 8
+    const w = Math.max(3, Math.round((cat.list.length / total) * BAR_W))
     return [
-      text({ x: 25, y: y + 14, content: `${cat.label} (${cat.list.length})`, fill: theme.text, size: 12 }),
-      bar({ x: 130, y, width: w, height: 16, fill: cat.color }),
-      bar({ x: 130 + w, y, width: BAR_MAX - w, height: 16, fill: theme.border }),
+      dot({ cx: 35, cy: midY, fill: cat.color }),
+      text({ x: 47, y: midY + 4, content: `${cat.label} (${cat.list.length})`, fill: theme.text, size: 12 }),
+      bar({ x: BAR_X, y, width: BAR_W, height: 16, fill: '#161b22' }),
+      bar({ x: BAR_X, y, width: w, height: 16, fill: cat.color }),
     ].join('\n')
   }).join('\n')
 
+  const rbY = 52 + 3 * 30 + 8
+  const rbItems = categories.map(c => ({ pct: (c.list.length / total) * 100, color: c.color }))
+  const rb = rainbowBar({ x: 25, y: rbY, totalWidth: 445, items: rbItems })
+
   const deadList = data.dead.slice(0, 4).join(', ') + (data.dead.length > 4 ? '...' : '')
   const rip = data.dead.length
-    ? text({ x: 25, y: 170, content: `RIP: ${deadList}`, fill: theme.subtext, size: 11 })
+    ? text({ x: 25, y: rbY + 28, content: `RIP: ${deadList}`, fill: theme.subtext, size: 11 })
     : ''
 
-  return card({ height: 185, theme, title: 'Project Graveyard', body: bars + rip })
+  const height = data.dead.length ? rbY + 50 : rbY + 28
+  return card({ height, theme, title: 'Project Graveyard', body: rows + '\n' + rb + rip })
 }
 
 module.exports = async function handler(req, res) {

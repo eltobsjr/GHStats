@@ -2,6 +2,11 @@ const { createClient } = require('../lib/github')
 const { getTheme } = require('../lib/themes')
 const { card, text, bar, errorCard } = require('../lib/svg')
 
+const CHIP_X = [16, 173, 330]
+const CHIP_Y = 48
+const CHIP_W = 148
+const CHIP_H = 120
+
 const CLASSES = {
   Python: 'Data Alchemist', JavaScript: 'Web Architect', TypeScript: 'TypeScript Wizard',
   Go: 'Go Gopher Master', Rust: 'Memory Safe Guardian', Java: 'Enterprise Dragon',
@@ -39,17 +44,34 @@ async function fetchData(gh, username) {
 
 function renderCard(data, theme) {
   const progressPct = Math.min(100, Math.round((data.xp / data.xpForNext) * 100))
-  const BAR_W = 400
+  const BAR_W = 110
   const filled = Math.round((progressPct / 100) * BAR_W)
+  const barX = CHIP_X[2] + Math.round((CHIP_W - BAR_W) / 2)
+
   const body = [
-    text({ x: 247, y: 80, content: `Level ${data.level}`, fill: theme.accent, size: 28, weight: '700', anchor: 'middle' }),
-    text({ x: 247, y: 102, content: data.className, fill: theme.subtext, size: 13, anchor: 'middle' }),
-    bar({ x: 47, y: 120, width: filled, height: 10, fill: theme.accent }),
-    bar({ x: 47 + filled, y: 120, width: BAR_W - filled, height: 10, fill: theme.border }),
-    text({ x: 47, y: 148, content: `XP: ${data.xp.toLocaleString()}`, fill: theme.text, size: 12 }),
-    text({ x: 447, y: 148, content: `Next: ${data.xpForNext.toLocaleString()}`, fill: theme.subtext, size: 12, anchor: 'end' }),
+    // Chip 1 — Level
+    `<rect x="${CHIP_X[0]}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="8" fill="#161b22"/>`,
+    `<rect x="${CHIP_X[0]}" y="${CHIP_Y}" width="${CHIP_W}" height="4" rx="2" fill="${theme.accent}"/>`,
+    text({ x: CHIP_X[0] + CHIP_W / 2, y: CHIP_Y + 66, content: `Level ${data.level}`, fill: theme.accent,  size: 26, weight: '800', anchor: 'middle' }),
+    text({ x: CHIP_X[0] + CHIP_W / 2, y: CHIP_Y + 88, content: 'LEVEL',               fill: theme.subtext, size: 10,               anchor: 'middle' }),
+
+    // Chip 2 — Class
+    `<rect x="${CHIP_X[1]}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="8" fill="#161b22"/>`,
+    `<rect x="${CHIP_X[1]}" y="${CHIP_Y}" width="${CHIP_W}" height="4" rx="2" fill="#d2a8ff"/>`,
+    text({ x: CHIP_X[1] + CHIP_W / 2, y: CHIP_Y + 62, content: data.className,         fill: '#d2a8ff',     size: 12, weight: '600', anchor: 'middle' }),
+    text({ x: CHIP_X[1] + CHIP_W / 2, y: CHIP_Y + 88, content: 'CLASSE',               fill: theme.subtext, size: 10,               anchor: 'middle' }),
+
+    // Chip 3 — XP
+    `<rect x="${CHIP_X[2]}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="8" fill="#161b22"/>`,
+    `<rect x="${CHIP_X[2]}" y="${CHIP_Y}" width="${CHIP_W}" height="4" rx="2" fill="${theme.accent2}"/>`,
+    text({ x: CHIP_X[2] + CHIP_W / 2, y: CHIP_Y + 52, content: data.xp.toLocaleString('en-US'), fill: theme.accent2, size: 18, weight: '700', anchor: 'middle' }),
+    text({ x: CHIP_X[2] + CHIP_W / 2, y: CHIP_Y + 66, content: 'XP',                            fill: theme.subtext, size: 9,                anchor: 'middle' }),
+    bar({ x: barX, y: CHIP_Y + 76, width: BAR_W,    height: 8, fill: '#21262d', rx: 4 }),
+    bar({ x: barX, y: CHIP_Y + 76, width: filled,   height: 8, fill: theme.accent2, rx: 4 }),
+    text({ x: CHIP_X[2] + CHIP_W / 2, y: CHIP_Y + 101, content: `${progressPct}% to next`, fill: theme.subtext, size: 9, anchor: 'middle' }),
   ].join('\n')
-  return card({ theme, title: 'Coding RPG', body })
+
+  return card({ height: 185, theme, title: 'Coding RPG', body })
 }
 
 module.exports = async function handler(req, res) {

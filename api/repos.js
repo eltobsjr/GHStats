@@ -13,15 +13,18 @@ async function fetchData(gh, username) {
 
 function renderCard(repos, theme) {
   const body = repos.map((r, i) => {
-    const y = 55 + i * 28
+    const y = 48 + i * 38
     return [
-      text({ x: 25, y: y + 13, content: r.name, fill: theme.accent, size: 13, weight: '600' }),
-      text({ x: 250, y: y + 13, content: `★ ${r.stargazers_count}`, fill: theme.subtext, size: 12 }),
-      text({ x: 320, y: y + 13, content: `⑂ ${r.forks_count}`, fill: theme.subtext, size: 12 }),
-      text({ x: 390, y: y + 13, content: r.language || '', fill: theme.text, size: 12 }),
+      `<rect x="25" y="${y}" width="445" height="30" rx="6" fill="#161b22"/>`,
+      `<rect x="25" y="${y}" width="3" height="30" rx="1.5" fill="${theme.accent}"/>`,
+      text({ x: 38, y: y + 20, content: r.name,                                   fill: theme.accent,  size: 13, weight: '600' }),
+      text({ x: 258, y: y + 20, content: `★ ${r.stargazers_count.toLocaleString('en-US')}`, fill: theme.subtext, size: 12 }),
+      text({ x: 328, y: y + 20, content: `⑂ ${r.forks_count}`,                   fill: theme.subtext, size: 12 }),
+      text({ x: 393, y: y + 20, content: r.language || '',                         fill: theme.text,    size: 12 }),
     ].join('\n')
   }).join('\n')
-  return card({ height: 55 + repos.length * 28 + 15, theme, title: 'Top Repositories', body })
+
+  return card({ height: 48 + repos.length * 38 + 14, theme, title: 'Top Repositories', body })
 }
 
 module.exports = async function handler(req, res) {

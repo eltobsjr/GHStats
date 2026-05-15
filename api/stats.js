@@ -1,12 +1,16 @@
 const { createClient } = require('../lib/github')
 const { getTheme } = require('../lib/themes')
-const { card, text, errorCard } = require('../lib/svg')
+const { card, text, chip, errorCard } = require('../lib/svg')
 
-const STATS = [
-  { key: 'totalStars', label: 'Total Stars' },
-  { key: 'totalCommits', label: 'Commits (year)' },
-  { key: 'followers', label: 'Followers' },
-  { key: 'totalRepos', label: 'Public Repos' },
+const CHIP_W = 214
+const CHIP_H = 56
+const COL2_X = 256
+
+const STAT_DEFS = [
+  { key: 'totalStars',   label: 'STARS',          colorKey: 'accent',  x: 25,     y: 48  },
+  { key: 'totalCommits', label: 'COMMITS (ANO)',   colorKey: 'accent2', x: COL2_X, y: 48  },
+  { key: 'followers',    label: 'SEGUIDORES',      color: '#d2a8ff',    x: 25,     y: 116 },
+  { key: 'totalRepos',   label: 'REPOS PÚBLICOS',  color: '#e3b341',    x: COL2_X, y: 116 },
 ]
 
 async function fetchData(gh, username) {
@@ -25,23 +29,23 @@ async function fetchData(gh, username) {
 }
 
 function renderCard(data, theme) {
-  const rows = STATS.map((s, i) => {
+  const chips = STAT_DEFS.map(s => {
     const val = data[s.key]
-    const display = val === null ? '?' : String(val)
-    const col = i % 2 === 0 ? 25 : 260
-    const row = Math.floor(i / 2)
-    const y = 75 + row * 40
+    const display = val === null ? '?' : (typeof val === 'number' ? val.toLocaleString('en-US') : String(val))
+    const color = s.color || theme[s.colorKey]
     return [
-      text({ x: col, y, content: s.label, fill: theme.subtext, size: 12 }),
-      text({ x: col, y: y + 18, content: display, fill: theme.text, size: 16, weight: '600' }),
+      chip({ x: s.x, y: s.y, width: CHIP_W, height: CHIP_H }),
+      text({ x: s.x + 12, y: s.y + 17, content: s.label, fill: theme.subtext, size: 10 }),
+      text({ x: s.x + 12, y: s.y + 42, content: display, fill: color, size: 22, weight: '700' }),
     ].join('\n')
   }).join('\n')
 
   const tokenHint = data.totalCommits === null
-    ? text({ x: 25, y: 190, content: 'Add GITHUB_TOKEN for commit count', fill: theme.subtext, size: 11 })
+    ? text({ x: 25, y: 208, content: 'Add GITHUB_TOKEN for commit count', fill: theme.subtext, size: 11 })
     : ''
 
-  return card({ height: 205, theme, title: `${data.name}'s GitHub Stats`, body: rows + tokenHint })
+  const height = data.totalCommits === null ? 222 : 190
+  return card({ height, theme, title: `${data.name}'s GitHub Stats`, body: chips + tokenHint })
 }
 
 module.exports = async function handler(req, res) {

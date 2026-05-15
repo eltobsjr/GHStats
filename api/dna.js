@@ -1,6 +1,6 @@
 const { createClient } = require('../lib/github')
 const { getTheme } = require('../lib/themes')
-const { card, text, bar, errorCard } = require('../lib/svg')
+const { card, text, bar, dot, rainbowBar, errorCard } = require('../lib/svg')
 
 const DNA_MAP = {
   backend:  ['Python', 'Go', 'Java', 'C#', 'Ruby', 'PHP', 'Rust', 'Elixir', 'Kotlin', 'Scala', 'Dart'],
@@ -42,21 +42,31 @@ async function fetchData(gh, username) {
 }
 
 function renderCard(profile, theme) {
-  const BAR_MAX = 340
+  const BAR_X = 130
+  const BAR_W = 305
+  const PCT_X = 455
+
   const entries = Object.entries(profile).sort(([, a], [, b]) => b - a)
-  const body = entries.map(([cat, pct], i) => {
-    const y = 55 + i * 25
-    const w = Math.max(2, Math.round((pct / 100) * BAR_MAX))
+  const rows = entries.map(([cat, pct], i) => {
+    const y = 52 + i * 29
+    const midY = y + 8
+    const w = Math.max(3, Math.round((pct / 100) * BAR_W))
     const fill = CATEGORY_COLORS[cat] || theme.accent
     const label = cat.charAt(0).toUpperCase() + cat.slice(1)
     return [
-      text({ x: 25, y: y + 13, content: label, fill: theme.text, size: 12 }),
-      bar({ x: 110, y, width: w, height: 14, fill }),
-      bar({ x: 110 + w, y, width: BAR_MAX - w, height: 14, fill: theme.border }),
-      text({ x: 460, y: y + 13, content: `${pct}%`, fill: theme.subtext, size: 11, anchor: 'end' }),
+      dot({ cx: 35, cy: midY, fill }),
+      text({ x: 47, y: midY + 4, content: label, fill: theme.text, size: 12 }),
+      bar({ x: BAR_X, y, width: BAR_W, height: 16, fill: '#161b22' }),
+      bar({ x: BAR_X, y, width: w, height: 16, fill }),
+      text({ x: PCT_X, y: midY + 4, content: `${pct}%`, fill: theme.subtext, size: 11, anchor: 'end' }),
     ].join('\n')
   }).join('\n')
-  return card({ height: 60 + entries.length * 25 + 15, theme, title: 'Developer DNA', body })
+
+  const rbY = 52 + entries.length * 29 + 8
+  const rbItems = entries.map(([cat, pct]) => ({ pct, color: CATEGORY_COLORS[cat] || theme.accent }))
+  const rb = rainbowBar({ x: 25, y: rbY, totalWidth: 445, items: rbItems })
+
+  return card({ height: rbY + 28, theme, title: 'Developer DNA', body: rows + '\n' + rb })
 }
 
 module.exports = async function handler(req, res) {

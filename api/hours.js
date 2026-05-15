@@ -29,7 +29,7 @@ function renderCard(data, theme) {
     })
   }
   const max = Math.max(...data.grid.flat(), 1)
-  const CELL = 16, GAP = 2, LABEL_W = 30, TOP = 55
+  const CELL = 16, GAP = 2, LABEL_W = 32, TOP = 52
   const cells = data.grid.flatMap((row, day) =>
     row.map((count, hour) => {
       const x = LABEL_W + hour * (CELL + GAP)
@@ -40,13 +40,13 @@ function renderCard(data, theme) {
     })
   )
   const dayLabels = DAYS.map((d, i) =>
-    text({ x: LABEL_W - 4, y: TOP + i * (CELL + GAP) + 12, content: d, fill: theme.subtext, size: 10, anchor: 'end' })
+    text({ x: LABEL_W - 4, y: TOP + i * (CELL + GAP) + 12, content: d, fill: theme.subtext, size: 11, anchor: 'end' })
   )
   const hourLabels = [0, 6, 12, 18, 23].map(h =>
-    text({ x: LABEL_W + h * (CELL + GAP), y: TOP - 6, content: `${h}h`, fill: theme.subtext, size: 9 })
+    text({ x: LABEL_W + h * (CELL + GAP), y: TOP - 6, content: `${h}h`, fill: theme.subtext, size: 10 })
   )
   return card({
-    height: 220,
+    height: 228,
     theme,
     title: 'Coding Hours',
     body: [...dayLabels, ...hourLabels, ...cells].join('\n'),

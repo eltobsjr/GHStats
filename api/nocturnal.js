@@ -2,6 +2,11 @@ const { createClient } = require('../lib/github')
 const { getTheme } = require('../lib/themes')
 const { card, text, errorCard } = require('../lib/svg')
 
+const CHIP_X = [16, 173, 330]
+const CHIP_Y = 48
+const CHIP_W = 148
+const CHIP_H = 120
+
 function analyzeNocturnal(contribs) {
   const hourCounts = Array(24).fill(0)
   let nightCommits = 0
@@ -63,13 +68,26 @@ function renderCard(data, theme) {
       body: text({ x: 25, y: 90, content: 'Add GITHUB_TOKEN to enable night owl stats', fill: theme.subtext }),
     })
   }
-  const body = [
-    text({ x: 247, y: 80, content: String(data.nightCommits), fill: theme.accent, size: 32, weight: '700', anchor: 'middle' }),
-    text({ x: 247, y: 100, content: 'commits after midnight', fill: theme.subtext, size: 12, anchor: 'middle' }),
-    text({ x: 100, y: 145, content: `Peak: ${formatHour(data.mostActiveHour)}`, fill: theme.text, size: 13, anchor: 'middle' }),
-    text({ x: 380, y: 145, content: `Longest session: ${formatDuration(data.longestSessionMs)}`, fill: theme.text, size: 13, anchor: 'middle' }),
-  ].join('\n')
-  return card({ theme, title: 'Night Owl Stats', body })
+
+  const chipDefs = [
+    { label: 'COMMITS NOTURNOS', sublabel: 'após meia-noite', value: String(data.nightCommits),                 color: theme.accent  },
+    { label: 'HORA PEAK',         sublabel: 'mais ativo',     value: formatHour(data.mostActiveHour),            color: theme.accent2 },
+    { label: 'SESSÃO MAIS LONGA', sublabel: 'contínua',       value: formatDuration(data.longestSessionMs),      color: '#e3b341'     },
+  ]
+
+  const body = chipDefs.map((c, i) => {
+    const x = CHIP_X[i]
+    const cx = x + CHIP_W / 2
+    return [
+      `<rect x="${x}" y="${CHIP_Y}" width="${CHIP_W}" height="${CHIP_H}" rx="8" fill="#161b22"/>`,
+      `<rect x="${x}" y="${CHIP_Y}" width="${CHIP_W}" height="4" rx="2" fill="${c.color}"/>`,
+      text({ x: cx, y: CHIP_Y + 62, content: c.value,    fill: c.color,       size: 24, weight: '800', anchor: 'middle' }),
+      text({ x: cx, y: CHIP_Y + 84, content: c.label,    fill: theme.subtext, size: 9,                anchor: 'middle' }),
+      text({ x: cx, y: CHIP_Y + 99, content: c.sublabel, fill: theme.subtext, size: 9,                anchor: 'middle' }),
+    ].join('\n')
+  }).join('\n')
+
+  return card({ height: 185, theme, title: 'Night Owl Stats', body })
 }
 
 module.exports = async function handler(req, res) {
