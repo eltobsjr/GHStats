@@ -1,8 +1,12 @@
 {
+  "buildCommand": "node preview.js && mkdir -p public && cp preview.html public/index.html",
   "functions": {
     "api/*.js": {
       "memory": 256,
       "maxDuration": 10
     }
-  }
+  },
+  "routes": [
+    { "src": "^/$", "dest": "/public/index.html" }
+  ]
 }

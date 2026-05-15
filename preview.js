@@ -50,7 +50,12 @@ const mockMood = {
 
 const mockDna = { frontend: 42, backend: 35, infra: 12, data: 8, systems: 3 }
 
-const mockRpg = { xp: 4820, level: 6, xpForNext: 4900, className: 'Web Architect' }
+const mockRpgMage      = { xp: 820,   level: 2,  xpForNext: 900,   className: 'Type Wizard'        }
+const mockRpgEngineer  = { xp: 4820,  level: 6,  xpForNext: 4900,  className: 'Goroutine Monk'     }
+const mockRpgWarrior   = { xp: 12400, level: 11, xpForNext: 14400, className: 'Borrow Keeper'      }
+const mockRpgSamurai   = { xp: 45000, level: 21, xpForNext: 48400, className: 'Swift Blade'        }
+const mockRpgRogue     = { xp: 72000, level: 30, xpForNext: 96100, className: 'Shadow Operator'    }
+const mockRpgAlchemist = { xp: 9800,  level: 9,  xpForNext: 10000, className: 'Data Alchemist'     }
 
 const mockNocturnal = { nightCommits: 234, mostActiveHour: 23, longestSessionMs: 4 * 3600000 + 20 * 60000, hasToken: true }
 
@@ -117,7 +122,12 @@ function renderAll(theme) {
     { title: 'Hours',      svg: renderHours(mockHours, theme)         },
     { title: 'Mood',       svg: renderMood(mockMood, theme)           },
     { title: 'DNA',        svg: renderDna(mockDna, theme)             },
-    { title: 'RPG',        svg: renderRpg(mockRpg, theme)             },
+    { title: 'RPG — Mage (lv2)',       svg: renderRpg(mockRpgMage,      theme) },
+    { title: 'RPG — Engineer (lv6)',   svg: renderRpg(mockRpgEngineer,  theme) },
+    { title: 'RPG — Warrior (lv11)',   svg: renderRpg(mockRpgWarrior,   theme) },
+    { title: 'RPG — Samurai (lv21)',   svg: renderRpg(mockRpgSamurai,   theme) },
+    { title: 'RPG — Rogue (lv30)',     svg: renderRpg(mockRpgRogue,     theme) },
+    { title: 'RPG — Alchemist (lv9)',  svg: renderRpg(mockRpgAlchemist, theme) },
     { title: 'Night Owl',  svg: renderNocturnal(mockNocturnal, theme) },
     { title: 'Graveyard',  svg: renderGraveyard(mockGraveyard, theme) },
     { title: 'Heatmap',    svg: renderHeatmap(mockHeatmapSvg, theme)     },

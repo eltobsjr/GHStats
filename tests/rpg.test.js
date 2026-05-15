@@ -1,4 +1,5 @@
-const { calculateRpg, getClass, renderCard } = require('../api/rpg')
+const { calculateRpg, renderCard } = require('../api/rpg')
+const { getClass } = require('../lib/sprites')
 const { getTheme } = require('../lib/themes')
 
 const theme = getTheme('dark')
@@ -11,15 +12,15 @@ test('calculateRpg computes xp and level', () => {
 })
 
 test('getClass maps top language to class name', () => {
-  expect(getClass('Python')).toBe('Data Alchemist')
-  expect(getClass('Go')).toBe('Go Gopher Master')
-  expect(getClass('UnknownLang')).toBe('Code Nomad')
+  expect(getClass('Python').name).toBe('Data Alchemist')
+  expect(getClass('Go').name).toBe('Goroutine Monk')
+  expect(getClass('UnknownLang').name).toBe('Code Nomad')
 })
 
 test('renderCard returns SVG with level', () => {
-  const rpg = { xp: 1100, level: 3, xpForNext: 1600, className: 'Go Gopher Master' }
+  const rpg = { xp: 1100, level: 3, xpForNext: 1600, className: 'Goroutine Monk' }
   const svg = renderCard(rpg, theme)
   expect(svg).toMatch(/^<svg/)
   expect(svg).toContain('Level 3')
-  expect(svg).toContain('Go Gopher Master')
+  expect(svg).toContain('Goroutine Monk')
 })
